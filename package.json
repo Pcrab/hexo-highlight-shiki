@@ -8,6 +8,9 @@
         "email": "pcrab@pcrab.xyz",
         "url": "https://github.com/Pcrab"
     },
+    "bugs": {
+        "url": "https://github.com/Pcrab/hexo-highlight-shiki/issues"
+    },
     "keywords": [
         "hexo",
         "plugin",
@@ -15,7 +18,7 @@
         "highlight"
     ],
     "repository": "github:Pcrab/hexo-highlight-shiki.git",
-    "homepage": "",
+    "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
     "license": "MIT",
     "dependencies": {
         "deasync": "^0.1.28",
