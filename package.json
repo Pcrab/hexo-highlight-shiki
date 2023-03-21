@@ -1,0 +1,24 @@
+{
+    "name": "hexo-highlight-shiki",
+    "version": "1.0.0",
+    "description": "A hexo plugin adds shiki highlight support",
+    "main": "src/index.js",
+    "author": {
+        "name": "Pcrab",
+        "email": "pcrab@pcrab.xyz",
+        "url": "https://github.com/Pcrab"
+    },
+    "keywords": [
+        "hexo",
+        "plugin",
+        "shiki",
+        "highlight"
+    ],
+    "repository": "github:Pcrab/hexo-highlight-shiki.git",
+    "homepage": "",
+    "license": "MIT",
+    "dependencies": {
+        "deasync": "^0.1.28",
+        "shiki": "^0.14.1"
+    }
+}
