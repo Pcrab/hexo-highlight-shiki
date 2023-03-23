@@ -7,7 +7,7 @@ on:
       - "v*"
 
 jobs:
-  npmjs:
+  github_publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,14 +23,7 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           node-version: 16
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
       - name: Publish to github packages
-        run: pnpm publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
