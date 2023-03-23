@@ -20,7 +20,10 @@
     "scripts": {
         "preinstall": "npx only-allow pnpm"
     },
-    "repository": "github:Pcrab/hexo-highlight-shiki.git",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Pcrab/hexo-highlight-shiki.git"
+    },
     "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
     "license": "MIT",
     "files": [
