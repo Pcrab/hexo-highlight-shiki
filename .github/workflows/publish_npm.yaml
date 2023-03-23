@@ -1,16 +1,13 @@
-name: Publish Package
+name: Publish
+
 on:
-  workflow_call:
-    inputs:
-      url:
-        type: string
-        required: true
-      token:
-        type: string
-        required: true
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  cache-and-install:
+  npmjs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,7 +20,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          registry-url: ${{ inputs.url }}
+          registry-url: "https://registry.npmjs.org"
           node-version: 16
 
       - uses: pnpm/action-setup@v2
@@ -36,4 +33,4 @@ jobs:
       - name: Publish to npmjs
         run: pnpm publish
         env:
-          NODE_AUTH_TOKEN: ${{ inputs.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
