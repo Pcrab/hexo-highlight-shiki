@@ -1,4 +1,4 @@
-name: Publish
+name: Publish to Github
 
 on:
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
           version: 7
           run_install: false
 
-      - name: Publish to npmjs
+      - name: Publish to github packages
         run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
