@@ -26,5 +26,8 @@
     "dependencies": {
         "deasync": "^0.1.28",
         "shiki": "^0.14.1"
+    },
+    "peerDependencies": {
+        "hexo": ">=7.0.0-rc1"
     }
 }
