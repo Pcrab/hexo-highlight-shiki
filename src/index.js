@@ -8,16 +8,21 @@ const config = (hexo.config.shiki = Object.assign(
     hexo.config.shiki || {}
 ));
 
+let highlighter = undefined;
+let getting = false;
+
 hexo.extend.highlight.register("shiki", (code, options) => {
-    let highlighter = undefined;
-    shiki
-        .getHighlighter({
-            theme: config.theme,
-            langs: [options.lang],
-        })
-        .then((hl) => {
-            highlighter = hl;
-        });
+    if (highlighter === undefined && !getting) {
+        getting = true;
+        shiki
+            .getHighlighter({
+                theme: config.theme,
+            })
+            .then((hl) => {
+                highlighter = hl;
+                getting = false;
+            });
+    }
     let count = 200;
     while (!highlighter) {
         if (count-- < 0) {
