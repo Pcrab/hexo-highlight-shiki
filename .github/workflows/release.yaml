@@ -1,4 +1,4 @@
-name: "tagged-release"
+name: "Tagged Release"
 
 permissions:
   contents: write
@@ -16,4 +16,5 @@ jobs:
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
+          prerelease: false
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
