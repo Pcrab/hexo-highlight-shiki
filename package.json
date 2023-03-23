@@ -23,6 +23,9 @@
     "repository": "github:Pcrab/hexo-highlight-shiki.git",
     "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
     "license": "MIT",
+    "files": [
+        "src/index.js"
+    ],
     "dependencies": {
         "deasync": "^0.1.28",
         "shiki": "^0.14.1"
