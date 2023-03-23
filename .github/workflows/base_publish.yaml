@@ -1,0 +1,39 @@
+name: Publish Package
+on:
+  workflow_call:
+    inputs:
+      url:
+        type: string
+        required: true
+      token:
+        type: string
+        required: true
+
+jobs:
+  cache-and-install:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          registry-url: ${{ inputs.url }}
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Publish to npmjs
+        run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.token }}
