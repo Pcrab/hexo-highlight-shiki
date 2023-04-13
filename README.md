@@ -26,3 +26,10 @@ Otherwise please use official plugin [hexo-shiki-twoslash](https://github.com/sh
    shiki:
      theme: "github-light"
    ```
+
+4. Configure renderer if using [djot](htts://github.com/Pcrab/hexo-renderer-djot)
+
+   ```yaml
+   shiki:
+     renderer: "djot"
+   ```
