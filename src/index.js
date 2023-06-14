@@ -1,5 +1,5 @@
 const shiki = require("shiki");
-const fs = require("fs");
+const fsPromises = require("fs/promises");
 const config = (hexo.config.shiki = Object.assign(
     {
         renderer: "marked",
@@ -12,9 +12,9 @@ return shiki
     .getHighlighter({
         theme: config.theme,
     })
-    .then((hl) => {
-        config.languages.forEach(async lang => {
-            const grammarDef = JSON.parse(fs.readFileSync("./" + lang.grammar));
+    .then(async (hl) => {
+        for (const lang of config.languages) {
+            const grammarDef = JSON.parse(await fsPromises.readFile(lang.grammar));
             const langDef = {
                 id: lang.id,
                 scopeName: lang.scope_name,
@@ -22,7 +22,7 @@ return shiki
                 aliases: lang.aliases || [],
             };
             await hl.loadLanguage(langDef);
-        });
+        }
         if (config.renderer === "djot") {
             hexo.extend.filter.register("djot:renderer", (renderOverrides) => {
                 renderOverrides.code_block = (node) => {
