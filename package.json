@@ -30,7 +30,7 @@
     "src/*"
   ],
   "dependencies": {
-    "shiki": "^0.14.1"
+    "shiki": "^1.0.0"
   },
   "peerDependencies": {
     "hexo": ">=7.0.0-rc1"
