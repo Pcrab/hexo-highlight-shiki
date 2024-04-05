@@ -1,6 +1,6 @@
 {
     "name": "hexo-highlight-shiki",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "description": "A hexo plugin adds shiki highlight support",
     "main": "src/index.js",
     "author": {
