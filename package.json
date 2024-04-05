@@ -1,38 +1,38 @@
 {
-  "name": "hexo-highlight-shiki",
-  "version": "1.4.3",
-  "description": "A hexo plugin adds shiki highlight support",
-  "main": "src/index.js",
-  "author": {
-    "name": "Pcrab",
-    "email": "pcrab@pcrab.xyz",
-    "url": "https://github.com/Pcrab"
-  },
-  "bugs": {
-    "url": "https://github.com/Pcrab/hexo-highlight-shiki/issues"
-  },
-  "keywords": [
-    "hexo",
-    "plugin",
-    "shiki",
-    "highlight"
-  ],
-  "scripts": {
-    "preinstall": "npx only-allow pnpm"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Pcrab/hexo-highlight-shiki.git"
-  },
-  "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
-  "license": "MIT",
-  "files": [
-    "src/*"
-  ],
-  "dependencies": {
-    "shiki": "^0.14.1"
-  },
-  "peerDependencies": {
-    "hexo": ">=7.0.0-rc1"
-  }
+    "name": "hexo-highlight-shiki",
+    "version": "1.4.3",
+    "description": "A hexo plugin adds shiki highlight support",
+    "main": "src/index.js",
+    "author": {
+        "name": "Pcrab",
+        "email": "pcrab@pcrab.xyz",
+        "url": "https://github.com/Pcrab"
+    },
+    "bugs": {
+        "url": "https://github.com/Pcrab/hexo-highlight-shiki/issues"
+    },
+    "keywords": [
+        "hexo",
+        "plugin",
+        "shiki",
+        "highlight"
+    ],
+    "scripts": {
+        "preinstall": "npx only-allow pnpm"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Pcrab/hexo-highlight-shiki.git"
+    },
+    "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
+    "license": "MIT",
+    "files": [
+        "src/*"
+    ],
+    "dependencies": {
+        "shiki": "^0.14.6"
+    },
+    "peerDependencies": {
+        "hexo": "^7.0.0"
+    }
 }
