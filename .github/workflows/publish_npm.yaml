@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
-          node-version: 16
+          node-version: 22
 
       - name: Publish to npmjs
         run: npm publish
