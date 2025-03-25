@@ -25,9 +25,10 @@
     },
     "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
     "license": "AGPL-3.0-only",
-    "files": ["dist/*"],
+    "files": ["dist/*", "src/*"],
     "dependencies": {
-        "shiki": "^3.2.1"
+        "shiki": "^3.2.1",
+        "zod": "^3.24.2"
     },
     "peerDependencies": {
         "hexo": "^7.0.0"
@@ -42,6 +43,6 @@
         "node": ">=22.12.0 || >=20.19.0"
     },
     "pnpm": {
-        "onlyBuiltDependencies": ["@biomejs/biome"]
+        "onlyBuiltDependencies": ["@biomejs/biome", "hexo-util"]
     }
 }

@@ -1,26 +1,16 @@
-import type { ShikiConfig } from "./types";
-
 import fsPromises from "node:fs/promises";
+import type { LanguageInput, ThemeInput } from "shiki";
 import shiki, { bundledLanguages } from "shiki";
-import type {
-    BundledLanguage,
-    BundledTheme,
-    LanguageInput,
-    SpecialTheme,
-} from "shiki";
-import { verifyConfig } from "./verify";
+import { shikiConfig } from "./config";
 
-const config: ShikiConfig = hexo.config.shiki ?? {};
+const HIGHLIGHTER_NAME = "shiki";
 
-console.log(config);
-verifyConfig(config);
+const { data: config, error } = shikiConfig.safeParse(hexo.config.shiki ?? {});
+if (!config) {
+    throw error;
+}
 
-const themes: (BundledTheme | SpecialTheme)[] = config.themes
-    ? Object.values(config.themes)
-    : [config.theme ?? "none"];
-
-// @ts-ignore
-const langs = await // only ignore await, prevent auto format
+const langs = await // add comment here to prevent auto format
 Promise.all(
     config.languages?.map(async (lang) => {
         if (typeof lang === "string") {
@@ -34,23 +24,43 @@ Promise.all(
     }) ?? [],
 );
 
-// @ts-ignore
-const hl = await // only ignore await, prevent auto format
-shiki.createHighlighter({
+const themes = await Promise.all(
+    ("theme" in config ? [config.theme] : Object.values(config.themes)).map(
+        async (theme) => {
+            if (typeof theme === "string") {
+                return theme;
+            }
+
+            const themeContent: ThemeInput = JSON.parse(
+                await fsPromises.readFile(theme.path ?? "", "utf-8"),
+            );
+            return {
+                ...theme,
+                content: themeContent,
+            };
+        },
+    ),
+);
+
+const hl = await shiki.createHighlighter({
     themes,
     langs: [
         ...langs,
-        ...(config.loadAllLanguages ? Object.keys(bundledLanguages) : []),
+        // if no bundled languages are specified, load all languages
+        ...(langs.filter((lang) => typeof lang === "string").length === 0 &&
+        config.loadAllLanguages !== false
+            ? Object.keys(bundledLanguages)
+            : []),
     ],
 });
 
-hexo.extend.highlight.register("shiki", (code, options) => {
+hexo.extend.highlight.register(HIGHLIGHTER_NAME, (code, options) => {
     try {
         return hl.codeToHtml(code, {
-            ...(config.themes
-                ? { themes: config.themes }
-                : { theme: config.theme ?? "none" }),
-            lang: options.lang as BundledLanguage | SpecialTheme,
+            ...("theme" in config
+                ? { theme: config.theme }
+                : { themes: config.themes }),
+            lang: options.lang as string,
         });
     } catch (e) {
         if (e instanceof Error) {
@@ -61,3 +71,39 @@ hexo.extend.highlight.register("shiki", (code, options) => {
         return `<pre><code>${code}</code></pre>`;
     }
 });
+
+if (
+    hexo.config.syntax_highlighter === HIGHLIGHTER_NAME &&
+    "themes" in config &&
+    config.autoInjectCSS !== false
+) {
+    hexo.extend.injector.register(
+        "head_end",
+        `<style>${
+            config.autoInjectCSS === "query"
+                ? `
+@media (prefers-color-scheme: dark) {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+    `
+                : `
+${config.darkSelector} .shiki,
+${config.darkSelector} .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+                `
+        }</style>`,
+    );
+}
