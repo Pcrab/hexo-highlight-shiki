@@ -1,8 +1,5 @@
 # Hexo Highlight Shiki
 
-> The latest version (v2.0.0+) is using latest shiki (v3.2.1+), and is esm only.
-> This requires node `>= 20.19.0 || >= 22.12.0` which supports require(esm).
-
 Use [shiki](https://github.com/shikijs/shiki) as code block highlighter instead of builtin highlight.js or prism.js.
 
 ## Installation

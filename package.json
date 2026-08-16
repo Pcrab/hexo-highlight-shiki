@@ -1,48 +1,49 @@
 {
-    "name": "hexo-highlight-shiki",
-    "version": "2.1.0",
-    "description": "A hexo plugin adds shiki highlight support",
-    "main": "dist/index.js",
-    "author": {
-        "name": "Pcrab",
-        "email": "pcrab@pcrab.xyz",
-        "url": "https://github.com/Pcrab"
-    },
-    "bugs": {
-        "url": "https://github.com/Pcrab/hexo-highlight-shiki/issues"
-    },
-    "keywords": ["hexo", "plugin", "shiki", "highlight"],
-    "scripts": {
-        "build": "tsc",
-        "dev": "tsc -w",
-        "format": "biome check ./src",
-        "prepublishOnly": "npm run build",
-        "preinstall": "npx only-allow pnpm"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Pcrab/hexo-highlight-shiki.git"
-    },
-    "homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
-    "license": "AGPL-3.0-only",
-    "files": ["dist/*", "src/*"],
-    "dependencies": {
-        "shiki": "^3.2.1",
-        "zod": "^3.24.2"
-    },
-    "peerDependencies": {
-        "hexo": "^7.0.0"
-    },
-    "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
-    "devDependencies": {
-        "@biomejs/biome": "^1.9.4",
-        "@types/node": "^22.13.13",
-        "typescript": "^5.8.2"
-    },
-    "engines": {
-        "node": ">=22.12.0 || >=20.19.0"
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": ["@biomejs/biome", "hexo-util"]
-    }
+	"name": "hexo-highlight-shiki",
+	"version": "3.0.0-beta.0",
+	"description": "A hexo plugin adds shiki highlight support",
+	"main": "dist/index.js",
+	"author": {
+		"name": "Pcrab",
+		"email": "pcrab@pcrab.xyz",
+		"url": "https://github.com/Pcrab"
+	},
+	"bugs": {
+		"url": "https://github.com/Pcrab/hexo-highlight-shiki/issues"
+	},
+	"keywords": [
+		"hexo",
+		"plugin",
+		"shiki",
+		"highlight"
+	],
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc -w",
+		"format": "biome check --write .",
+		"prepublishOnly": "pnpm run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Pcrab/hexo-highlight-shiki.git"
+	},
+	"homepage": "https://github.com/Pcrab/hexo-highlight-shiki",
+	"license": "AGPL-3.0-only",
+	"files": [
+		"dist/*",
+		"src/*"
+	],
+	"dependencies": {
+		"shiki": "^4.4.3",
+		"zod": "^4.4.3"
+	},
+	"peerDependencies": {
+		"hexo": ">=7.0.0"
+	},
+	"packageManager": "pnpm@11.21.0",
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.8",
+		"@types/node": "^26.2.0",
+		"typescript": "^7.0.2"
+	}
 }
