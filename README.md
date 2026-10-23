@@ -52,9 +52,9 @@ Shiki supports dark mode now.
 
 ```yaml
 shiki:
-   themes:
-      dark: "github-dark"
-      light: "github-light"
+  themes:
+    dark: "github-dark"
+    light: "github-light"
 ```
 
 For more configuration options, see [Custom Dark Mode](#custom-dark-mode) and [Custom Theme](#custom-theme).
@@ -104,8 +104,8 @@ The default selector is `html.dark`. You can change it by `darkSelector` field.
 
 ```yaml
 shiki:
-   autoInjectCSS: "class"
-   darkSelector: "html.dark"
+  autoInjectCSS: "class"
+  darkSelector: "html.dark"
 ```
 
 ### Custom Theme
@@ -123,11 +123,12 @@ shiki:
 
 ```yaml
 shiki:
-   themes:
-      dark:
-         name: "custom-dark"
-         path: "path/to/custom-dark.json"
-      light:
-         name: "custom-light"
-         path: "path/to/custom-light.json"
+  themes:
+    dark:
+      name: "custom-dark"
+      path: "path/to/custom-dark.json"
+    light:
+      name: "custom-light"
+      path: "path/to/custom-light.json"
 ```
+

@@ -1,14 +1,15 @@
-import type { BundledTheme } from "shiki";
 import { bundledLanguages, bundledThemes } from "shiki";
-import type { ZodLiteral } from "zod";
 import { z } from "zod";
 
-const themeLiteralType = z.union(
-	Object.keys(bundledThemes).map((theme) => z.literal(theme)) as [
-		ZodLiteral<BundledTheme>,
-		ZodLiteral<BundledTheme>,
-		...ZodLiteral<BundledTheme>[],
-	],
+const themeLiteralType = z.string().and(
+	z.custom<keyof typeof bundledThemes>(
+		(value) => typeof value === "string" && Object.hasOwn(bundledThemes, value),
+		{
+			abort: false,
+			error: (err) =>
+				`Only shiki bundled themes are allowed, but got ${err.input}`,
+		},
+	),
 );
 
 const themeItem = z.union([
@@ -45,12 +46,16 @@ const themeConfig = z.union([
 	),
 ]);
 
-const languageItem = z.union(
-	Object.keys(bundledLanguages).map((lang) => z.literal(lang)) as [
-		ZodLiteral<string>,
-		ZodLiteral<string>,
-		...ZodLiteral<string>[],
-	],
+const languageItem = z.string().and(
+	z.custom<keyof typeof bundledLanguages>(
+		(value) =>
+			typeof value === "string" && Object.hasOwn(bundledLanguages, value),
+		{
+			abort: false,
+			error: (err) =>
+				`Only shiki bundled languages are allowed, but got ${err.input}`,
+		},
+	),
 );
 
 const languageConfig = z.intersection(

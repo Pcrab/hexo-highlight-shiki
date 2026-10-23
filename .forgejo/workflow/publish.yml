@@ -1,0 +1,34 @@
+name: Deploy Pages
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: docker
+
+    env:
+      TZ: Asia/Shanghai
+      NPM_REGISTRY: ${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/npm/
+
+    steps:
+      - name: set npm config
+        run: |
+          npm config set "@${{ forgejo.repository_owner }}:registry" "$NPM_REGISTRY"
+          npm config set -- "//${NPM_REGISTRY#*://}:_authToken" "${{ secrets.CODEBERG_PACKAGE_READ_TOKEN }}"
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v7
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to registry
+        run: |
+          npm config set -- "//${NPM_REGISTRY#*://}:_authToken" "${{ secrets.CODEBERG_PACKAGE_TOKEN }}"
+          npm publish

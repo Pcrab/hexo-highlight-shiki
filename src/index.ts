@@ -1,13 +1,21 @@
 import { readFile } from "node:fs/promises";
 import type { LanguageInput, ThemeInput } from "shiki";
 import { bundledLanguages, createHighlighter } from "shiki";
+import z from "zod";
 import { shikiConfig } from "./config.js";
 
 const HIGHLIGHTER_NAME = "shiki";
 
 const { data: config, error } = shikiConfig.safeParse(hexo.config.shiki ?? {});
 if (!config) {
-	throw error;
+	// console.error(z.prettifyError(error));
+	throw new Error(
+		`Shiki config parse failed:
+${z.prettifyError(error)}`,
+		{
+			cause: error,
+		},
+	);
 }
 
 const langs = await // add comment here to prevent auto format
@@ -59,7 +67,7 @@ hexo.extend.highlight.register(HIGHLIGHTER_NAME, (code, options) => {
 		return hl.codeToHtml(code, {
 			...("theme" in config
 				? { theme: config.theme }
-				: { themes: config.themes }),
+				: { themes: config.themes, defaultColor: "light-dark()" }),
 			lang: options.lang as string,
 		});
 	} catch (e) {
@@ -71,40 +79,3 @@ hexo.extend.highlight.register(HIGHLIGHTER_NAME, (code, options) => {
 		return `<pre><code>${code}</code></pre>`;
 	}
 });
-
-if (
-	hexo.config.syntax_highlighter === HIGHLIGHTER_NAME &&
-	"themes" in config &&
-	config.autoInjectCSS !== false
-) {
-	hexo.extend.injector.register(
-		"head_end",
-		`<style>${
-			config.autoInjectCSS === "query"
-				? `
-@media (prefers-color-scheme: dark) {
-  .shiki,
-  .shiki span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-    /* Optional, if you also want font styles */
-    font-style: var(--shiki-dark-font-style) !important;
-    font-weight: var(--shiki-dark-font-weight) !important;
-    text-decoration: var(--shiki-dark-text-decoration) !important;
-  }
-}
-    `
-				: `
-${config.darkSelector} .shiki,
-${config.darkSelector} .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  /* Optional, if you also want font styles */
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
-}
-                `
-		}</style>`,
-	);
-}
